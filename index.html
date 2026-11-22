@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>healthy plate, healthy planet!</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@500;600&family=Patrick+Hand&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- SCENE 1: INTRO WITH CURVED TITLE & 3D GLOBE -->
+    <div id="scene-intro" class="scene active">
+        <svg class="curved-title-svg" viewBox="0 0 500 120">
+            <path id="textCurve" d="M 60,100 Q 250,20 440,100" fill="transparent" />
+            <text>
+                <textPath href="#textCurve" startOffset="50%" text-anchor="middle">
+                    green healthy week
+                </textPath>
+            </text>
+        </svg>
+
+        <div class="earth-track">
+            <div class="earth-globe-new">
+                <div class="globe-clip">
+                    <div class="globe-map-img"></div>
+                </div>
+                <div class="globe-shadow"></div>
+            </div>
+        </div>
+
+        <button class="start-btn" onclick="goToScene('scene-menu')">let's go!</button>
+    </div>
+
+    <!-- SCENE 0: MAIN HUB MENU -->
+    <div id="scene-menu" class="scene">
+        <div class="glass-header" style="margin-bottom: 25px;">
+            <h2>green healthy week</h2>
+            <p>choose a game to play!</p>
+        </div>
+
+        <div class="menu-grid">
+            <div class="menu-card" onclick="goToScene('scene-color')">
+                <div class="menu-icon">🍽️</div>
+                <h3>Plate Builder</h3>
+                <p>Design a balanced healthy meal!</p>
+            </div>
+            <div class="menu-card" onclick="startSortingGame()">
+                <div class="menu-icon">⚡</div>
+                <h3>Food Sort</h3>
+                <p>Sort fruits & veggies fast!</p>
+            </div>
+            <div class="menu-card" onclick="startCatchGame()">
+                <div class="menu-icon">🧺</div>
+                <h3>Catch Snack</h3>
+                <p>Catch falling healthy treats!</p>
+            </div>
+        </div>
+
+        <div style="margin-top: 25px;">
+            <div class="menu-card" onclick="startMemoryFromMenu()" style="max-width: 280px; margin: 0 auto;">
+                <div class="menu-icon">🧠</div>
+                <h3>Nutrition Match</h3>
+                <p>Test your memory with food cards!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCENE 2: CHOOSE COLOR -->
+    <div id="scene-color" class="scene">
+        <div class="glass-header">
+            <h2>pick your plate!</h2>
+            <p>choose a color for your meal</p>
+        </div>
+        
+        <div class="color-grid">
+            <div class="color-option" onclick="selectColor('#a7f3d0', this)">
+                <div class="plate-preview" style="background: #a7f3d0; border: 4px solid #6ee7b7;"></div>
+            </div>
+            <div class="color-option" onclick="selectColor('#bae6fd', this)">
+                <div class="plate-preview" style="background: #bae6fd; border: 4px solid #7dd3fc;"></div>
+            </div>
+            <div class="color-option" onclick="selectColor('#fef08a', this)">
+                <div class="plate-preview" style="background: #fef08a; border: 4px solid #fde047;"></div>
+            </div>
+            <div class="color-option" onclick="selectColor('#fbcfe8', this)">
+                <div class="plate-preview" style="background: #fbcfe8; border: 4px solid #f9a8d4;"></div>
+            </div>
+            <div class="color-option" onclick="selectColor('#e9d5ff', this)">
+                <div class="plate-preview" style="background: #e9d5ff; border: 4px solid #d8b4fe;"></div>
+            </div>
+            <div class="color-option" onclick="selectColor('#fed7aa', this)">
+                <div class="plate-preview" style="background: #fed7aa; border: 4px solid #fdba74;"></div>
+            </div>
+            <div class="color-option" onclick="selectColor('#fecaca', this)">
+                <div class="plate-preview" style="background: #fecaca; border: 4px solid #fca5a5;"></div>
+            </div>
+            <div class="color-option" onclick="selectColor('#ccfbf1', this)">
+                <div class="plate-preview" style="background: #ccfbf1; border: 4px solid #5eead4;"></div>
+            </div>
+        </div>
+        <div class="controls" style="margin-top: 25px;">
+            <button class="btn-back" onclick="goToScene('scene-menu')">🏠 Main Menu</button>
+        </div>
+    </div>
+
+    <!-- SCENE 3: BUILD MEAL -->
+    <div id="scene-build" class="scene">
+        <div class="top-hud">
+            <div class="hud-title">HEALTHY METER</div>
+            <div class="meter-bg">
+                <div class="meter-fill" id="healthMeter"></div>
+            </div>
+            <div class="hud-stats">
+                <span class="label">FOODS ON PLATE</span>
+                <span class="value" id="countVal">0</span>
+            </div>
+        </div>
+
+        <div class="build-container">
+            <div class="panel food-panel">
+                <h3>FRUITS 🍎</h3>
+                <div class="food-list">
+                    <img src="blueberry.png" class="draggable" draggable="true" data-src="blueberry.png" data-size="45" alt="Blueberry">
+                    <img src="strawberry.png" class="draggable" draggable="true" data-src="strawberry.png" data-size="55" alt="Strawberry">
+                    <img src="apple.png" class="draggable" draggable="true" data-src="apple.png" data-size="70" alt="Apple">
+                    <img src="banana.png" class="draggable" draggable="true" data-src="banana.png" data-size="100" alt="Banana">
+                    <img src="kiwi.png" class="draggable" draggable="true" data-src="kiwi.png" data-size="50" alt="Kiwi">
+                    <img src="watermelon.png" class="draggable" draggable="true" data-src="watermelon.png" data-size="125" alt="Watermelon">
+                    <img src="pomegranate.png" class="draggable" draggable="true" data-src="pomegranate.png" data-size="85" alt="Pomegranate">
+                    <img src="avocado.png" class="draggable" draggable="true" data-src="avocado.png" data-size="65" alt="Avocado">
+                    <img src="mango.png" class="draggable" draggable="true" data-src="mango.png" data-size="120" alt="Mango">
+                </div>
+            </div>
+
+            <div class="center-stage">
+                <div class="plate-wrapper" id="dropZone">
+                    <div class="the-plate" id="activePlate"></div>
+                    <div class="food-layer" id="foodLayer"></div>
+                </div>
+                <div class="controls">
+                    <button class="btn-back" onclick="goToScene('scene-color')">change plate</button>
+                    <button class="btn-clear" onclick="clearPlate()">clear plate</button>
+                    <button class="btn-back" onclick="goToScene('scene-menu')">🏠 menu</button>
+                </div>
+            </div>
+
+            <div class="panel food-panel">
+                <h3>VEGGIES 🥦</h3>
+                <div class="food-list">
+                    <img src="carrot.png" class="draggable" draggable="true" data-src="carrot.png" data-size="90" alt="Carrot">
+                    <img src="mushroom.png" class="draggable" draggable="true" data-src="mushroom.png" data-size="50" alt="Mushroom">
+                    <img src="broccoli.png" class="draggable" draggable="true" data-src="broccoli.png" data-size="65" alt="Broccoli">
+                    <img src="lettuce.png" class="draggable" draggable="true" data-src="lettuce.png" data-size="105" alt="Lettuce">
+                    <img src="corn.png" class="draggable" draggable="true" data-src="corn.png" data-size="95" alt="Corn">
+                    <img src="pepper.png" class="draggable" draggable="true" data-src="pepper.png" data-size="75" alt="Pepper">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCENE 4: MEMORY FLASHCARD GAME -->
+    <div id="scene-game" class="scene">
+        <div class="glass-header">
+            <h2>NUTRITION MATCH</h2>
+            <p>match the healthy food cards to win!</p>
+        </div>
+        
+        <div class="game-container">
+            <div class="game-grid" id="memoryGrid"></div>
+        </div>
+
+        <div class="controls" style="margin-top: 25px;">
+            <button class="btn-back" onclick="goToScene('scene-menu')">🏠 Main Menu</button>
+            <button class="btn-clear" onclick="initMemoryGame()">🔄 Restart</button>
+        </div>
+    </div>
+
+    <!-- SCENE 5: FOOD GROUP SORTING GAME -->
+    <div id="scene-sorting" class="scene">
+        <div class="glass-header">
+            <h2>FOOD SORT SPEED RUN</h2>
+            <p>is it a fruit or a vegetable?</p>
+        </div>
+        
+        <div class="game-container">
+            <div class="recipe-display-card" style="text-align: center;">
+                <div id="sortItemDisplay" style="font-size: 5rem; margin-bottom: 10px;">🍎</div>
+                <h3 id="sortItemName" style="font-family: 'Patrick Hand', cursive; font-size: 2rem; color: var(--poster-dark); margin-bottom: 15px;">Apple</h3>
+                <div style="display: flex; gap: 15px; justify-content: center;">
+                    <button class="btn-sort" onclick="checkSort('fruit')">🍎 Fruit</button>
+                    <button class="btn-sort" onclick="checkSort('veggie')">🥦 Veggie</button>
+                </div>
+                <p id="sortScoreText" style="font-family: 'IBM Plex Mono', monospace; margin-top: 15px; font-size: 0.85rem; color: #166534;">Score: 0</p>
+            </div>
+        </div>
+
+        <div class="controls" style="margin-top: 25px;">
+            <button class="btn-back" onclick="goToScene('scene-menu')">🏠 Main Menu</button>
+        </div>
+    </div>
+
+    <!-- SCENE 6: CATCH THE SNACK ARCADE GAME -->
+    <div id="scene-catch" class="scene">
+        <div class="glass-header" style="margin-bottom: 10px;">
+            <h2>CATCH THE SNACK</h2>
+            <p>move the basket to catch falling food!</p>
+        </div>
+        
+        <div class="catch-arena" id="catchArena">
+            <div class="catch-score" id="catchScoreText">Score: 0</div>
+            <div class="falling-basket" id="playerBasket">🧺</div>
+        </div>
+
+        <div class="controls" style="margin-top: 20px;">
+            <button class="btn-back" onclick="exitCatchGame()">🏠 Main Menu</button>
+        </div>
+    </div>
+
+    <!-- MODALS -->
+    <div class="achievement-modal" id="achievementModal">
+        <div class="achievement-card">
+            <div class="badge-icon">🌟</div>
+            <div class="achievement-tag">ACHIEVEMENT UNLOCKED</div>
+            <h3 class="achievement-title">Master Chef</h3>
+            <p class="achievement-desc">"You built a balanced plate! Ready to play or head to the menu?"</p>
+            
+            <div class="achievement-actions">
+                <button class="btn-action primary" onclick="launchMemoryGame()">Play Memory Game ✨</button>
+                <button class="btn-action secondary" onclick="goToScene('scene-menu')">Main Menu 🏠</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="achievement-modal" id="winModal">
+        <div class="achievement-card">
+            <div class="badge-icon">🎉</div>
+            <div class="achievement-tag">WELL DONE!</div>
+            <h3 class="achievement-title">Memory Master</h3>
+            <p class="achievement-desc">"You matched all the healthy food cards correctly!"</p>
+            
+            <div class="achievement-actions">
+                <button class="btn-action primary" onclick="resetGame()">Play Again? 🔄</button>
+                <button class="btn-action secondary" onclick="goToScene('scene-menu')">Main Menu 🏠</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOD SORT WRONG MODAL -->
+    <div class="achievement-modal" id="sortWrongModal">
+        <div class="achievement-card">
+            <div class="badge-icon">❌</div>
+            <div class="achievement-tag" style="color: #dc2626;">OOPS!</div>
+            <h3 class="achievement-title">Not Quite!</h3>
+            <p class="achievement-desc" id="sortWrongText">"That item belongs in a different group!"</p>
+            <div class="achievement-actions">
+                <button class="btn-action primary" onclick="closeSortWrongModal()">Keep Playing ✨</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOD SORT WIN MODAL -->
+    <div class="achievement-modal" id="sortWinModal">
+        <div class="achievement-card">
+            <div class="badge-icon">🏆</div>
+            <div class="achievement-tag">SPEED RUN CLEARED</div>
+            <h3 class="achievement-title">Sort Master!</h3>
+            <p class="achievement-desc">"You successfully sorted 10 items correctly!"</p>
+            <div class="achievement-actions">
+                <button class="btn-action primary" onclick="startSortingGame()">Play Again 🔄</button>
+                <button class="btn-action secondary" onclick="goToScene('scene-menu')">Main Menu 🏠</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CATCH GAME OVER / WIN MODALS -->
+    <div class="achievement-modal" id="catchGameOverModal">
+        <div class="achievement-card">
+            <div class="badge-icon">💥</div>
+            <div class="achievement-tag" style="color: #dc2626;">GAME OVER</div>
+            <h3 class="achievement-title">Dropped It!</h3>
+            <p class="achievement-desc" id="catchFinalScoreText">"A snack hit the floor! Try again to reach 20."</p>
+            <div class="achievement-actions">
+                <button class="btn-action primary" onclick="startCatchGame()">Try Again 🔄</button>
+                <button class="btn-action secondary" onclick="goToScene('scene-menu')">Main Menu 🏠</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="achievement-modal" id="catchWinModal">
+        <div class="achievement-card">
+            <div class="badge-icon">👑</div>
+            <div class="achievement-tag">ARCADE CHAMPION</div>
+            <h3 class="achievement-title">Snack Legend!</h3>
+            <p class="achievement-desc">"You caught 20 healthy snacks without dropping any!"</p>
+            <div class="achievement-actions">
+                <button class="btn-action primary" onclick="startCatchGame()">Play Again 🔄</button>
+                <button class="btn-action secondary" onclick="goToScene('scene-menu')">Main Menu 🏠</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
