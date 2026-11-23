@@ -19,6 +19,7 @@
 <body>
 
     <!-- SCENE 1: INTRO WITH CURVED TITLE & 3D GLOBE -->
+     <div id="scene-stage">
     <div id="scene-intro" class="scene active">
         <svg class="curved-title-svg" viewBox="0 0 500 120">
             <path id="textCurve" d="M 60,100 Q 250,20 440,100" fill="transparent" />
@@ -66,13 +67,13 @@
             </div>
         </div>
 
-        <div style="margin-top: 25px;">
-            <div class="menu-card" onclick="startMemoryFromMenu()" style="max-width: 280px; margin: 0 auto;">
-                <div class="menu-icon">🧠</div>
-                <h3>Nutrition Match</h3>
-                <p>Test your memory with food cards!</p>
-            </div>
-        </div>
+        <div class="menu-grid menu-grid-last">
+    <div class="menu-card" onclick="startMemoryFromMenu()">
+        <div class="menu-icon">🧠</div>
+        <h3>Nutrition Match</h3>
+        <p>Test your memory with food cards!</p>
+    </div>
+</div>
     </div>
 
     <!-- SCENE 2: CHOOSE COLOR -->
@@ -308,15 +309,37 @@
             </div>
         </div>
     </div>
+    </div>
 
     <!-- FOOTER -->
-    <footer style="text-align: center; padding: 10px; font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: #6b7280; position: fixed; bottom: 0; width: 100%; pointer-events: none; z-index: 100;">
+    <footer style="text-align: center; padding: 30px 10px; font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: #6b7280; width: 100%; margin-top: 40px; position: relative; z-index: 10;">
         <span>© 2026 Green Healthy Week</span> | 
-        <a href="terms.html" style="color: #6b7280; text-decoration: underline; pointer-events: auto;">Terms</a> | 
-        <a href="privacy.html" style="color: #6b7280; text-decoration: underline; pointer-events: auto;">Privacy Policy</a> | 
-        <span style="opacity: 0.4; font-size: 0.6rem;">crafted by manousha & tassy ✨</span>
+        <a href="terms.html" style="color: #6b7280; text-decoration: underline;">Terms</a> | 
+        <a href="privacy.html" style="color: #6b7280; text-decoration: underline;">Privacy Policy</a> <br>
+        <span style="opacity: 0.4; font-size: 0.6rem;">created by merna ❣️</span>
     </footer>
 
     <script src="script.js"></script>
+
+<script>
+    document.querySelectorAll('a[href="terms.html"], a[href="privacy.html"]').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            const destination = this.href;
+
+            document.body.style.transition =
+                'opacity 0.45s ease, filter 0.45s ease, transform 0.45s ease';
+
+            document.body.style.opacity = '0';
+            document.body.style.filter = 'blur(10px)';
+            document.body.style.transform = 'scale(0.97)';
+
+            setTimeout(() => {
+                window.location.href = destination;
+            }, 450);
+        });
+    });
+</script>
 </body>
 </html>

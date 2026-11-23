@@ -21,12 +21,21 @@ body {
   background: linear-gradient(135deg, #f8faf8 0%, #edf7ed 100%);
   font-family: 'Inter', sans-serif;
   color: var(--poster-dark);
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+#scene-stage {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    flex-shrink: 0;
 }
 
 /* ==========================================
-   TYPOGRAPHY & SCENES
+   TYPOGRAPHY & SEAMLESS BLUR TRANSITIONS
    ========================================== */
 .poster-title, .glass-header h2, .panel h3 {
   font-family: 'Patrick Hand', cursive;
@@ -46,15 +55,18 @@ body {
   align-items: center;
   justify-content: center;
   opacity: 0;
+  filter: blur(10px);
   pointer-events: none;
-  transform: scale(0.95);
-  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform: scale(0.94) translateY(15px);
+  transition: opacity 0.4s ease, filter 0.4s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .scene.active {
   opacity: 1;
+  filter: blur(0px);
   pointer-events: all;
-  transform: scale(1);
+  transform: scale(1) translateY(0);
+  min-height: 80vh;
 }
 
 /* ==========================================
@@ -65,7 +77,8 @@ body {
 }
 
 .curved-title-svg {
-  width: 420px;
+  width: 100%;
+  max-width: 420px;
   height: 90px;
   overflow: visible;
   margin-bottom: 1px;
@@ -172,6 +185,7 @@ body {
   max-width: 900px;
   width: 92%;
   margin-bottom: 8px;
+  flex-wrap: wrap;
 }
 
 .menu-card {
@@ -181,6 +195,7 @@ body {
   border-radius: 26px;
   padding: 20px 14px;
   flex: 1;
+  min-width: 180px;
   text-align: center;
   cursor: pointer;
   box-shadow: var(--shadow);
@@ -347,9 +362,10 @@ body {
   gap: 10px;
   flex: 1;
   min-height: 0;
-  overflow: hidden;
-  align-content: center;
+  overflow-y: auto;
+  align-content: start;
   justify-items: center;
+  padding: 4px;
 }
 
 .draggable {
@@ -419,6 +435,8 @@ body {
   display: flex;
   gap: 10px;
   margin-top: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .controls button {
@@ -459,7 +477,7 @@ body {
 }
 
 /* ==========================================
-   MEMORY GAME GRID (PROPERLY FIXED)
+   MEMORY GAME GRID
    ========================================== */
 .game-container {
     display: flex;
@@ -467,15 +485,17 @@ body {
     align-items: center;
     justify-content: center;
     width: 100%;
+    padding: 10px;
 }
 
 .game-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    gap: 12px;
-    width: 440px;
-    height: 330px;
+    gap: 10px;
+    width: 100%;
+    max-width: 440px;
+    aspect-ratio: 4 / 3;
     background: var(--white-glass);
     backdrop-filter: blur(15px);
     border: 2px solid white;
@@ -558,7 +578,7 @@ body {
 .catch-arena {
     width: 90%;
     max-width: 420px;
-    height: 60vh;
+    height: 55vh;
     background: var(--white-glass);
     backdrop-filter: blur(15px);
     border: 3px solid white;
@@ -603,7 +623,7 @@ body {
 
 @keyframes fallDown {
     0% { transform: translateY(0) rotate(0deg); }
-    100% { transform: translateY(62vh) rotate(360deg); }
+    100% { transform: translateY(55vh) rotate(360deg); }
 }
 
 /* ==========================================
@@ -713,42 +733,487 @@ body {
     box-shadow: none !important;
 }
 
+/* Legal page transitions */
+
+body.legal-page {
+    opacity: 0;
+    filter: blur(10px);
+    transform: scale(0.97);
+    transition:
+        opacity 0.45s ease,
+        filter 0.45s ease,
+        transform 0.45s ease;
+}
+
+body.legal-page.page-visible {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+}
+
+body.legal-page.page-exit {
+    opacity: 0;
+    filter: blur(10px);
+    transform: scale(0.97);
+    pointer-events: none;
+}
+
+/* ==========================================
+   RESPONSIVE MOBILE
+   ========================================== */
+
 @media (max-width: 768px) {
+
+  html,
+  body {
+    width: 100%;
+    min-height: 100%;
+    overflow-x: hidden;
+  }
+
+  body {
+    overflow-y: auto;
+  }
+
+  /* ------------------------------------------
+     SCENES + BLUR TRANSITION
+     ------------------------------------------ */
+
+  .scene {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    min-height: 100vh;
+    height: auto;
+
+    padding: 20px 14px 30px;
+
+    opacity: 0;
+    filter: blur(10px);
+    transform: scale(0.96) translateY(12px);
+
+    pointer-events: none;
+
+    transition:
+      opacity 0.4s ease,
+      filter 0.4s ease,
+      transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .scene.active {
+    position: relative;
+    inset: auto;
+
+    width: 100%;
+    min-height: 100vh;
+    height: auto;
+
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1) translateY(0);
+
+    pointer-events: all;
+  }
+
+
+  /* ------------------------------------------
+     INTRO / GLOBE
+     ------------------------------------------ */
+
+  #scene-intro {
+    min-height: 100vh;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .curved-title-svg {
+    width: 100%;
+    max-width: 340px;
+    height: 75px;
+    margin-bottom: 0;
+  }
+
+  .curved-title-svg text {
+    font-size: 32px;
+    letter-spacing: 1.5px;
+  }
+
+  .earth-track {
+    width: 100%;
+    height: 230px;
+    margin-bottom: 15px;
+  }
+
+  .earth-globe-new {
+    width: min(70vw, 230px);
+    height: min(70vw, 230px);
+  }
+
+  .globe-map-img {
+    width: 460px;
+    height: 230px;
+
+    background-size: 230px 230px;
+  }
+
+  @keyframes spinMap {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(-230px);
+    }
+  }
+
+  .start-btn {
+    padding: 13px 38px;
+    font-size: 1.15rem;
+  }
+
+
+  /* ------------------------------------------
+     MENU
+     ------------------------------------------ */
+
+  .glass-header {
+    width: 100%;
+    margin-bottom: 18px;
+  }
+
+  .glass-header h2 {
+    font-size: 2.2rem;
+  }
+
   .menu-grid {
+    width: 100%;
+    max-width: 360px;
+
+    display: flex;
     flex-direction: column;
-    gap: 12px;
-    max-width: 300px;
+
+    gap: 10px;
+    margin-bottom: 10px;
   }
+
+  .menu-card {
+    width: 100%;
+    min-width: 0;
+
+    padding: 13px 15px;
+
+    border-radius: 20px;
+
+    display: flex;
+    align-items: center;
+    text-align: left;
+
+    gap: 14px;
+  }
+
+  .menu-icon {
+    flex-shrink: 0;
+    font-size: 1.8rem;
+    margin: 0;
+  }
+
+  .menu-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 2px;
+  }
+
+  .menu-card p {
+    font-size: 0.68rem;
+    line-height: 1.3;
+  }
+
+
+  /* ------------------------------------------
+     COLOR SELECTION
+     ------------------------------------------ */
+
+  .color-grid {
+    width: 100%;
+    max-width: 360px;
+    gap: 10px;
+    padding: 0 5px;
+  }
+
+  .color-option {
+    padding: 12px;
+    border-radius: 18px;
+  }
+
+  .plate-preview {
+    width: 52px;
+    height: 52px;
+  }
+
+
+  /* ------------------------------------------
+     HUD
+     ------------------------------------------ */
+
+  .top-hud {
+    position: sticky;
+
+    top: 10px;
+
+    width: calc(100% - 20px);
+    max-width: 500px;
+
+    padding: 8px 12px;
+
+    gap: 8px;
+    border-radius: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    transform: none;
+    left: auto;
+  }
+
+  .hud-title {
+    font-size: 0.65rem;
+  }
+
+  .top-hud .meter-bg {
+    height: 11px;
+  }
+
+  .hud-stats {
+    gap: 4px;
+  }
+
+  .hud-stats .label {
+    font-size: 0.55rem;
+  }
+
+  .hud-stats .value {
+    font-size: 1rem;
+  }
+
+
+  /* ------------------------------------------
+     BUILD MEAL
+     ------------------------------------------ */
+
   .build-container {
-    grid-template-columns: 1fr;
-    grid-template-rows: 85px 1fr 85px;
-    height: 85vh;
-    margin-top: 55px;
-  }
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    height: auto;
+    min-height: 0;
+    margin-top: 70px;
+    padding: 0 0 30px;
+    overflow-x: hidden;
+    overflow-y: visible;
+}
+
   .panel {
+    width: 100%;
+    max-width: 500px;
+    height: 78px;
+    max-height: 78px;
+    padding: 8px 10px;
     flex-direction: row;
     align-items: center;
-    padding: 10px;
-    max-height: 85px;
-  }
+    border-radius: 20px;
+    min-width: 0;
+    overflow: hidden;
+}
+
   .panel h3 {
-    writing-mode: vertical-rl;
-    margin: 0 8px 0 0;
-    font-size: 0.8rem;
-  }
-  .food-list {
-    flex-direction: row;
-    overflow-x: auto;
-  }
-  .draggable {
-    width: 50px;
-    height: 50px;
     flex-shrink: 0;
+
+    margin: 0 10px 0 0;
+
+    font-size: 0.9rem;
+    white-space: nowrap;
   }
+
+  .food-list {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    min-width: 0;
+    width: 100%;
+    padding: 3px;
+    scrollbar-width: none;
+    flex: 1;
+}
+
+  .food-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .draggable {
+    width: 48px;
+    height: 48px;
+
+    flex: 0 0 48px;
+
+    padding: 5px;
+
+    border-radius: 13px;
+  }
+
+  .center-stage {
+    width: 100%;
+    min-height: 250px;
+  }
+
   .plate-wrapper {
-    width: 65vw;
-    height: 65vw;
-    max-width: 260px;
-    max-height: 260px;
+    width: min(62vw, 230px);
+    height: min(62vw, 230px);
   }
+
+
+  /* ------------------------------------------
+     CONTROLS
+     ------------------------------------------ */
+
+  .controls {
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .controls button {
+    padding: 8px 15px;
+    font-size: 0.75rem;
+  }
+
+  .btn-sort {
+    width: 125px;
+    padding: 10px;
+    font-size: 0.78rem;
+  }
+
+
+  /* ------------------------------------------
+     MEMORY GAME
+     ------------------------------------------ */
+
+  .game-container {
+    width: 100%;
+    padding: 10px 0;
+  }
+
+  .game-grid {
+    width: min(94vw, 420px);
+
+    gap: 7px;
+
+    padding: 10px;
+
+    border-radius: 24px;
+  }
+
+  .card-front,
+  .card-back {
+    border-radius: 12px;
+  }
+
+  .card-front {
+    padding: 5px;
+  }
+
+  .card-front img {
+    width: 72%;
+    height: 72%;
+  }
+
+
+  /* ------------------------------------------
+     CATCH GAME
+     ------------------------------------------ */
+
+  .catch-arena {
+    width: min(92vw, 420px);
+    height: 65vh;
+
+    border-radius: 25px;
+  }
+
+  .falling-basket {
+    font-size: 4rem;
+  }
+
+  .falling-item {
+    font-size: 2.2rem;
+  }
+
+
+  /* ------------------------------------------
+     MODALS
+     ------------------------------------------ */
+
+  .achievement-modal {
+    padding: 15px;
+  }
+
+  .achievement-card {
+    width: min(92vw, 380px);
+
+    padding: 1.5rem 1.2rem;
+
+    border-radius: 24px;
+  }
+
+  .achievement-title {
+    font-size: 2rem;
+  }
+
+  .achievement-desc {
+    font-size: 0.85rem;
+  }
+
+   footer {
+    margin-top: 40px;
+    position: relative;
+    z-index: 10;
+    flex-shrink: 0;
+}
+}
+
+/* ==========================================
+   CUSTOM GREEN SCROLLBAR
+   ========================================== */
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #86efac;
+    border-radius: 20px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #4ade80;
+    background-clip: content-box;
+}
+
+/* Remove scrollbar arrows */
+::-webkit-scrollbar-button {
+    display: none;
+    width: 0;
+    height: 0;
+}
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #86efac transparent;
 }
