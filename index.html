@@ -16,10 +16,9 @@
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@500;600&family=Patrick+Hand&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 
-    <!-- Favicon -->
     <link rel="icon" type="image/png" href="favicon.png">
 
-    <meta property="og:title" content="Green Healthy Week 🍎">
+    <meta property="og:title" content="green healthy week">
 
 <meta property="og:description"
 content="Explore nutrition, build healthy plates, and discover how to care for our planet!">
@@ -37,7 +36,6 @@ content="https://healthy-plate-healthy-planet.vercel.app/">
 </head>
 <body>
 
-    <!-- SCENE 1: INTRO WITH CURVED TITLE & 3D GLOBE -->
      <div id="scene-stage">
     <div id="scene-intro" class="scene active">
         <svg class="curved-title-svg" viewBox="0 0 500 120">
@@ -61,7 +59,6 @@ content="https://healthy-plate-healthy-planet.vercel.app/">
         <button class="start-btn" onclick="goToScene('scene-menu')">let's go!</button>
     </div>
 
-    <!-- SCENE 0: MAIN HUB MENU -->
     <div id="scene-menu" class="scene">
         <div class="glass-header" style="margin-bottom: 25px;">
             <h2>green healthy week</h2>
@@ -95,7 +92,6 @@ content="https://healthy-plate-healthy-planet.vercel.app/">
 </div>
     </div>
 
-    <!-- SCENE 2: CHOOSE COLOR -->
     <div id="scene-color" class="scene">
         <div class="glass-header">
             <h2>pick your plate!</h2>
@@ -133,7 +129,6 @@ content="https://healthy-plate-healthy-planet.vercel.app/">
         </div>
     </div>
 
-    <!-- SCENE 3: BUILD MEAL -->
     <div id="scene-build" class="scene">
         <div class="top-hud">
             <div class="hud-title">HEALTHY METER</div>
@@ -188,7 +183,6 @@ content="https://healthy-plate-healthy-planet.vercel.app/">
         </div>
     </div>
 
-    <!-- SCENE 4: MEMORY FLASHCARD GAME -->
     <div id="scene-game" class="scene">
         <div class="glass-header">
             <h2>NUTRITION MATCH</h2>
@@ -205,7 +199,6 @@ content="https://healthy-plate-healthy-planet.vercel.app/">
         </div>
     </div>
 
-    <!-- SCENE 5: FOOD GROUP SORTING GAME -->
     <div id="scene-sorting" class="scene">
         <div class="glass-header">
             <h2>FOOD SORT SPEED RUN</h2>
@@ -229,7 +222,6 @@ content="https://healthy-plate-healthy-planet.vercel.app/">
         </div>
     </div>
 
-    <!-- SCENE 6: CATCH THE SNACK ARCADE GAME -->
     <div id="scene-catch" class="scene">
         <div class="glass-header" style="margin-bottom: 10px;">
             <h2>CATCH THE SNACK</h2>
@@ -246,7 +238,6 @@ content="https://healthy-plate-healthy-planet.vercel.app/">
         </div>
     </div>
 
-    <!-- MODALS -->
     <div class="achievement-modal" id="achievementModal">
         <div class="achievement-card">
             <div class="badge-icon">🌟</div>
@@ -275,7 +266,6 @@ content="https://healthy-plate-healthy-planet.vercel.app/">
         </div>
     </div>
 
-    <!-- FOOD SORT WRONG MODAL -->
     <div class="achievement-modal" id="sortWrongModal">
         <div class="achievement-card">
             <div class="badge-icon">❌</div>
@@ -288,7 +278,6 @@ content="https://healthy-plate-healthy-planet.vercel.app/">
         </div>
     </div>
 
-    <!-- FOOD SORT WIN MODAL -->
     <div class="achievement-modal" id="sortWinModal">
         <div class="achievement-card">
             <div class="badge-icon">🏆</div>
@@ -302,7 +291,6 @@ content="https://healthy-plate-healthy-planet.vercel.app/">
         </div>
     </div>
 
-    <!-- CATCH GAME OVER / WIN MODALS -->
     <div class="achievement-modal" id="catchGameOverModal">
         <div class="achievement-card">
             <div class="badge-icon">💥</div>
@@ -329,8 +317,7 @@ content="https://healthy-plate-healthy-planet.vercel.app/">
         </div>
     </div>
     </div>
-
-    <!-- FOOTER -->
+    
     <footer style="text-align: center; padding: 30px 10px; font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: #6b7280; width: 100%; margin-top: 40px; position: relative; z-index: 10;">
         <span>© 2026 Green Healthy Week</span> | 
         <a href="terms.html" style="color: #6b7280; text-decoration: underline;">Terms</a> | 

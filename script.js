@@ -1,11 +1,9 @@
-/* ==========================================
-1. DOM ELEMENTS & STATE SETUP
-   ========================================== */
+
 const scenes = document.querySelectorAll('.scene');
 let hasUnlockedGame = false;
 
 function goToScene(id) {
-    closeAllModals(); // Clears any sticky modals when switching scenes
+    closeAllModals();
     scenes.forEach(s => s.classList.remove('active'));
     const targetScene = document.getElementById(id);
     if (targetScene) {
@@ -33,9 +31,6 @@ function selectColor(color, el) {
     setTimeout(() => goToScene('scene-build'), 300);
 }
 
-/* ==========================================
-2. DRAG & DROP & TOUCH CONTROLS
-   ========================================== */
 document.querySelectorAll('.draggable').forEach(item => {
     item.addEventListener('dragstart', e => {
         if (hasUnlockedGame) {
@@ -140,9 +135,6 @@ function moveTouch(t) {
     }
 }
 
-/* ==========================================
-3. PLATE BUILDER & STATS
-   ========================================== */
 function addFood(src, size, x, y) {
     if (!src || hasUnlockedGame) return;
     const foodLayer = document.getElementById('foodLayer');
@@ -226,9 +218,6 @@ function resetGame() {
     goToScene('scene-build');
 }
 
-/* ==========================================
-4. MEMORY MATCH GAME LOGIC
-   ========================================== */
 const gameFoodImages = ['strawberry.png', 'broccoli.png', 'banana.png', 'carrot.png', 'apple.png', 'mushroom.png'];
 let memoryCards = [];
 let flippedCards = [];
@@ -314,9 +303,6 @@ function checkMemoryMatch() {
     }
 }
 
-/* ==========================================
-5. FOOD SORTING SPEED RUN (WIN AT 10 + CUSTOM MODAL)
-   ========================================== */
 const sortItems = [
     { name: 'Apple', emoji: '🍎', type: 'fruit' },
     { name: 'Broccoli', emoji: '🥦', type: 'veggie' },
@@ -364,9 +350,6 @@ function closeSortWrongModal() {
     nextSortItem();
 }
 
-/* ==========================================
-6. CATCH THE SNACK ARCADE (WIN AT 20, LOSE ON FLOOR HIT)
-   ========================================== */
 let catchScore = 0;
 let itemSpawnInterval = null;
 const catchEmojis = ['🍎', '🍌', '🍓', '🥦', '🥕', '🍉'];
@@ -476,9 +459,6 @@ function exitCatchGame() {
     goToScene('scene-menu');
 }
 
-/* ==========================================
-7. AUTO-INTRO ROUTING
-   ========================================== */
 window.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
         goToScene('scene-menu');
